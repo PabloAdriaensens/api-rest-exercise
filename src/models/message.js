@@ -12,8 +12,7 @@ const messageSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'user',
   }],
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-})
+},
+{ timestamps: true })
 
 module.exports = mongoose.model('message', messageSchema)
