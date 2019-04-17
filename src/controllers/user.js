@@ -30,6 +30,7 @@ module.exports = {
       userId,
     } = req.params
     const newUser = req.body
+    // eslint-disable-next-line no-unused-vars
     const oldUser = await User.findByIdAndUpdate(userId, newUser)
     res.status(200).json({ success: true })
   },
@@ -42,5 +43,26 @@ module.exports = {
     res.status(200).json({
       success: true,
     })
+  },
+
+  newMessage: async (req, res, next) => {
+    const {
+      userId,
+    } = req.params
+    const newMessage = new Message(req.body)
+    const user = await User.findById(userId)
+    newMessage.sender = user
+    await newMessage.save()
+    user.messages.push(newMessage)
+    await user.save()
+    res.status(201).json(newMessage)
+  },
+
+  getMessages: async (req, res, next) => {
+    const {
+      userId,
+    } = req.params
+    const user = await User.findById(userId).populate('messages')
+    res.status(200).json(user)
   },
 }
