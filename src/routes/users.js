@@ -10,6 +10,7 @@ const {
   newMessage,
   getMessages,
   getTypeMessages,
+  getUnreadMessages,
 } = require('../controllers/user')
 
 router.get('/', index)
@@ -23,5 +24,6 @@ router.post('/:userId/messages', newMessage)
 router.get('/:userId/messages', getMessages)
 
 router.get('/typeMessages', getTypeMessages)
+router.get('/unreadMessages', getUnreadMessages)
 
 module.exports = router

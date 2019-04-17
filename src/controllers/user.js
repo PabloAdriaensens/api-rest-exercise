@@ -67,7 +67,12 @@ module.exports = {
   },
 
   getTypeMessages: async (req, res, next) => {
-    const messageTypes = await Message.find({ type: { $in: [ 'feedback', 'bug' ] } }, { 'type': 1, '_id': 0 })
+    const messageTypes = await Message.find({ type: { $in: [ 'feedback', 'bug' ] } }, { 'type': 1 })
+    res.status(200).json(messageTypes)
+  },
+
+  getUnreadMessages: async (req, res, next) => {
+    const messageTypes = await Message.find({ readed: false })
     res.status(200).json(messageTypes)
   },
 }
