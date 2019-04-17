@@ -9,8 +9,8 @@ const usersRoutes = require('./routes/users')
 
 mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost/api-rest-exercise', {
-    useNewUrlParser: true,
-    useCreateIndex: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
 })
 
 // settings
