@@ -65,4 +65,10 @@ module.exports = {
     const user = await User.findById(userId).populate('messages')
     res.status(200).json(user)
   },
+
+  getTypeMessages: async (req, res, next) => {
+    const user = await User.find(
+    )
+    res.status(200).json(user)
+  },
 }
