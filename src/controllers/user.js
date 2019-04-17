@@ -67,8 +67,7 @@ module.exports = {
   },
 
   getTypeMessages: async (req, res, next) => {
-    const user = await User.find(
-    )
-    res.status(200).json(user)
+    const messageTypes = await Message.find({ type: { $in: [ 'feedback', 'bug' ] } }, { 'type': 1, '_id': 0 })
+    res.status(200).json(messageTypes)
   },
 }
