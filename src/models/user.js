@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const userSchema = new Schema({
   username: { type: String, unique: true, dropDups: true },
-  email: String,
+  email: { type: String, unique: true },
   password: String,
   messages: [{
     type: Schema.Types.ObjectId,
