@@ -78,16 +78,16 @@ module.exports = {
   },
 
   getUnreadMessages: async (req, res, next) => {
-    const unreadMessages = await Message.findBy(
+    const unreadMessages = await Message.find(
       { readed: false })
     res.status(200).json(unreadMessages)
   },
 
   getMostMessages: async (req, res, next) => {
-    const unreadMessages = await Message.aggregate([
+    const mostMessages = await Message.aggregate([
       { $unwind: '$messages' },
       { $group: { type: '$messages', count: { $sum: 1 } } },
       { $limit: 3 } ])
-    res.status(200).json(unreadMessages)
+    res.status(200).json(mostMessages)
   },
 }
