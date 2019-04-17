@@ -40,9 +40,7 @@ module.exports = {
       userId,
     } = req.params
     await User.findByIdAndRemove(userId)
-    res.status(200).json({
-      success: true,
-    })
+    res.status(200).json({ success: true })
   },
 
   newMessage: async (req, res, next) => {
@@ -67,12 +65,29 @@ module.exports = {
   },
 
   getTypeMessages: async (req, res, next) => {
-    const messageTypes = await Message.find({ type: { $in: [ 'feedback', 'bug' ] } }, { 'type': 1 })
+    const messageTypes = await Message.find(
+      { type: { $in: [ 'feedback', 'bug' ] } },
+      { 'type': 1 })
     res.status(200).json(messageTypes)
   },
 
+  getSenderMessages: async (req, res, next) => {
+    const senderMessages = await Message.find({},
+      { 'sender': 1 })
+    res.status(200).json(senderMessages)
+  },
+
   getUnreadMessages: async (req, res, next) => {
-    const messageTypes = await Message.find({ readed: false })
-    res.status(200).json(messageTypes)
+    const unreadMessages = await Message.findBy(
+      { readed: false })
+    res.status(200).json(unreadMessages)
+  },
+
+  getMostMessages: async (req, res, next) => {
+    const unreadMessages = await Message.aggregate([
+      { $unwind: '$messages' },
+      { $group: { type: '$messages', count: { $sum: 1 } } },
+      { $limit: 3 } ])
+    res.status(200).json(unreadMessages)
   },
 }
