@@ -90,4 +90,12 @@ module.exports = {
       { $limit: 3 } ])
     res.status(200).json(mostMessages)
   },
+
+  getPepinoMessages: async (req, res, next) => {
+    const pepinoMessages = await Message.find(
+      { $or: [
+        { 'body': { $regex: '.*pepino.*' } },
+        { 'subject': { $regex: '.*pepino.*' } } ] })
+    res.status(200).json(pepinoMessages)
+  },
 }

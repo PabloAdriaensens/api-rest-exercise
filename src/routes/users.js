@@ -13,6 +13,7 @@ const {
   getSenderMessages,
   getUnreadMessages,
   getMostMessages,
+  getPepinoMessages,
 } = require('../controllers/user')
 
 router.get('/', index)
@@ -28,6 +29,7 @@ router.get('/:userId/messages', getMessages)
 router.get('/typeMessages', getTypeMessages)
 router.get('/senderMessages', getSenderMessages)
 router.get('/unreadMessages', getUnreadMessages)
-router.get('/unreadMessages', getMostMessages)
+router.get('/mostMessages', getMostMessages)
+router.get('/pepinoMessages', getPepinoMessages)
 
 module.exports = router
