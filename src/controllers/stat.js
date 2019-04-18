@@ -3,64 +3,84 @@ const Message = require('../models/message')
 module.exports = {
 
   getTypeMessages: async (req, res, next) => {
-    const messageTypes = await Message.find({
-      type: {
-        $in: ['feedback', 'bug'],
-      },
-    }, {
-      'type': 1,
-    })
-    res.status(200).json(messageTypes)
+    try {
+      const messageTypes = await Message.find({
+        type: {
+          $in: ['feedback', 'bug'],
+        },
+      }, {
+        'type': 1,
+      })
+      res.status(200).json(messageTypes)
+    } catch (err) {
+      res.status(500).json({ error: err.message })
+    }
   },
 
   getSenderMessages: async (req, res, next) => {
-    const senderMessages = await Message.find({}, {
-      'sender': 1,
-    })
-    res.status(200).json(senderMessages)
+    try {
+      const senderMessages = await Message.find({}, {
+        'sender': 1,
+      })
+      res.status(200).json(senderMessages)
+    } catch (err) {
+      res.status(500).json({ error: err.message })
+    }
   },
 
   getUnreadMessages: async (req, res, next) => {
-    const unreadMessages = await Message.find({
-      readed: false,
-    })
-    res.status(200).json(unreadMessages)
+    try {
+      const unreadMessages = await Message.find({
+        readed: false,
+      })
+      res.status(200).json(unreadMessages)
+    } catch (err) {
+      res.status(500).json({ error: err.message })
+    }
   },
 
   getMostMessages: async (req, res, next) => {
-    const mostMessages = await Message.aggregate([{
-      $unwind: '$messages',
-    },
-    {
-      $group: {
-        type: '$messages',
-        count: {
-          $sum: 1,
-        },
+    try {
+      const mostMessages = await Message.aggregate([{
+        $unwind: '$messages',
       },
-    },
-    {
-      $limit: 3,
-    },
-    ])
-    res.status(200).json(mostMessages)
-  },
-
-  getPepinoMessages: async (req, res, next) => {
-    const pepinoMessages = await Message.find({
-      $or: [{
-        'body': {
-          $regex: '.*pepino.*',
+      {
+        $group: {
+          type: '$messages',
+          count: {
+            $sum: 1,
+          },
         },
       },
       {
-        'subject': {
-          $regex: '.*pepino.*',
-        },
+        $limit: 3,
       },
-      ],
-    })
-    res.status(200).json(pepinoMessages)
+      ])
+      res.status(200).json(mostMessages)
+    } catch (err) {
+      res.status(500).json({ error: err.message })
+    }
+  },
+
+  getPepinoMessages: async (req, res, next) => {
+    try {
+      const pepinoMessages = await Message.find({
+        $or: [{
+          'body': {
+            $regex: '.*pepino.*',
+          },
+        },
+        {
+          'subject': {
+            $regex: '.*pepino.*',
+          },
+        },
+        ],
+      })
+      res.status(200).json(pepinoMessages)
+    } catch (err) {
+      res.status(500).json({ error: err.message })
+    }
   },
 
 }
