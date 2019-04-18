@@ -13,7 +13,7 @@ module.exports = {
       })
       res.status(200).json(messageTypes)
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 
@@ -24,7 +24,7 @@ module.exports = {
       })
       res.status(200).json(senderMessages)
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 
@@ -35,30 +35,40 @@ module.exports = {
       })
       res.status(200).json(unreadMessages)
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 
   getMostMessages: async (req, res, next) => {
     try {
       const mostMessages = await Message.aggregate([{
-        $unwind: '$messages',
-      },
-      {
-        $group: {
-          type: '$messages',
-          count: {
-            $sum: 1,
+        $project: {
+          item: 1,
+          numberOfMessages: {
+            $cond: {
+              if: {
+                $isArray: '$messages',
+              },
+              then: {
+                $size: '$messages',
+              },
+              else: 'NA',
+            },
           },
         },
       },
       {
+        $sort: {
+          numberOfMessages: -1,
+        },
+      }, {
         $limit: 3,
       },
       ])
+
       res.status(200).json(mostMessages)
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 
@@ -79,7 +89,7 @@ module.exports = {
       })
       res.status(200).json(pepinoMessages)
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 

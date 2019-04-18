@@ -16,7 +16,7 @@ module.exports = {
       await user.save()
       res.status(201).json(newMessage)
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 
@@ -28,7 +28,7 @@ module.exports = {
       const user = await User.findById(userId).populate('messages')
       res.status(200).json(user)
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 
@@ -41,7 +41,7 @@ module.exports = {
       const resp = await Message.findByIdAndUpdate(messageId, updateInfo)
       res.status(200).json(resp)
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 
@@ -53,7 +53,7 @@ module.exports = {
       await Message.findByIdAndRemove(messageId)
       res.status(200).json({ success: true })
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 

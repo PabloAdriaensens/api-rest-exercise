@@ -6,7 +6,7 @@ module.exports = {
       const users = await User.find({})
       res.status(200).json(users)
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 
@@ -16,7 +16,7 @@ module.exports = {
       const user = await newUser.save()
       res.status(200).json(user)
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(400).json('Bad request, make sure everything is well written')
     }
   },
 
@@ -28,7 +28,7 @@ module.exports = {
       const user = await User.findById(userId)
       res.status(200).json(user)
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 
@@ -42,7 +42,7 @@ module.exports = {
       const oldUser = await User.findByIdAndUpdate(userId, newUser)
       res.status(200).json({ success: true })
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 
@@ -54,7 +54,7 @@ module.exports = {
       await User.findByIdAndRemove(userId)
       res.status(200).json({ success: true })
     } catch (err) {
-      res.status(500).json({ error: err.message })
+      res.status(404).json('The requested URL was not found on this server')
     }
   },
 }
