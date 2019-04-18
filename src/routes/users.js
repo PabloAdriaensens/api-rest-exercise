@@ -7,8 +7,6 @@ const {
   getUser,
   updateUser,
   deleteUser,
-  newMessage,
-  getMessages,
   getTypeMessages,
   getSenderMessages,
   getUnreadMessages,
@@ -30,8 +28,5 @@ router.get('/pepinoMessages', getPepinoMessages)
 router.get('/:userId', getUser)
 router.put('/:userId', updateUser)
 router.delete('/:userId', deleteUser)
-
-router.post('/:userId/messages', newMessage)
-router.get('/:userId/messages', getMessages)
 
 module.exports = router
