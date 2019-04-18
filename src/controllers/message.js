@@ -26,7 +26,7 @@ module.exports = {
         userId,
       } = req.params
       const user = await User.findById(userId).populate('messages')
-      res.status(200).json(user)
+      res.status(200).json(user.messages)
     } catch (err) {
       res.status(404).json('The requested URL was not found on this server')
     }

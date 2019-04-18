@@ -44,11 +44,11 @@ module.exports = {
       const mostMessages = await Message.aggregate([{
         $project: {
           item: 1,
+          type: 1,
           numberOfMessages: {
             $cond: {
-              if: {
-                $isArray: '$messages',
-              },
+              if:
+                '$messages'.isArray,
               then: {
                 $size: '$messages',
               },

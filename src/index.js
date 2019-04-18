@@ -9,7 +9,6 @@ const usersRoutes = require('./routes/users')
 const messagesRoutes = require('./routes/messages')
 const statsRoutes = require('./routes/stats')
 
-mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost/api-rest-exercise', {
   useNewUrlParser: true,
   useCreateIndex: true,
